@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Type;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -26,7 +27,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create',compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create',compact('types','technologies'));
     }
 
     /**
@@ -38,11 +40,18 @@ class ProjectController extends Controller
             'title' => ['required', 'max:255', 'string',Rule::unique('projects')],
             'image' => ['required', 'url'],
             'description' => ['nullable'],
-            'type_id' => ['nullable','exists:types,id']
+            'type_id' => ['nullable','exists:types,id'],
+            'technology_id' => ['nullable','exists:types,id'],
         ]);
+        
         $data = $request->all();
         $data['slug'] = Str::slug($data['title'], '-');
         $project = Project::create($data);
+
+        if ($request->has('technologies')){
+            $project->technologies()->attach($data['technologies']);
+        }
+
         return redirect()->route('projects.show',$project->id);
     }
 
