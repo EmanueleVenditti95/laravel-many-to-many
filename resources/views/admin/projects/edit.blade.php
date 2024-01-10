@@ -13,6 +13,15 @@
                 <input type="text" class="form-control" name="title" id="title" placeholder="Inserisci titolo" value="{{$project->title}}" required>
             </div>
             <div class="form-group">
+                <label for="technologies">Tecnologie applicate :</label>
+                <div>
+                    @foreach ($technologies as $technology)
+                        <input name="technologies[]" type="checkbox" class="btn-check" value="{{$technology->id}}" id="{{$technology->id}}" @checked( in_array($technology->id, old('technologies',$project->technologies->pluck('id')->all()) ) )>
+                        <label class="btn btn-outline-info my-2 py-0" for="{{$technology->id}}">{{$technology->name}}</label>
+                    @endforeach
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="type_id">Tipo di progetto</label>
                 <select class="form-select" name="type_id" id="type_id">
                     <option value="">-</option>

@@ -12,7 +12,7 @@
             <input type="text" class="form-control" name="title" id="title" placeholder="Inserisci titolo" required>
         </div>
         <div class="form-group">
-            <label for="image">Tecnologie applicate :</label>
+            <label for="technologies">Tecnologie applicate :</label>
             <div>
                 @foreach ($technologies as $technology)
                     <input name="technologies[]" type="checkbox" class="btn-check" value="{{$technology->id}}" id="{{$technology->id}}" @checked( in_array($technology->id, old('technologies',[]) ) )>
