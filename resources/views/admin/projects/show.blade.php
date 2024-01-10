@@ -4,6 +4,11 @@
     <div class="container">
             <h2>{{isset($project->type) ? $project->type->name : ' '}}</h2>
             <h1>{{ $project->title }}</h1>
+
+            @foreach ($project->technologies as $technology)
+                <span class="badge text-bg-info mb-3">{{$technology->name}}</span>
+            @endforeach
+
             <figure><img src="{{ $project->image }}" alt=""></figure>
             <p>{{ $project->description }}</p>
             <div class="col-auto d-flex">
