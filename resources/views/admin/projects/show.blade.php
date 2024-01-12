@@ -9,7 +9,7 @@
                 <span class="badge text-bg-info mb-3">{{$technology->name}}</span>
             @endforeach
 
-            <figure><img src="{{ $project->image }}" alt=""></figure>
+            <figure><img src="{{ asset('storage/'.$project->image) }}" alt=""></figure>
             <p>{{ $project->description }}</p>
             <div class="col-auto d-flex">
                 <button class="btn btn-warning mt-3"><a class="text-dark text-decoration-none" href="{{ route('projects.edit',$project) }}">modifica</a></button>

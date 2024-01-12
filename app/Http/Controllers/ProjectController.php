@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Technology;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -38,13 +39,14 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => ['required', 'max:255', 'string',Rule::unique('projects')],
-            'image' => ['nullable', 'url'],
+            'image' => ['nullable', 'file','max:2048'],
             'description' => ['nullable'],
             'type_id' => ['nullable','exists:types,id'],
             'technology_id' => ['nullable','exists:types,id'],
         ]);
         
         $data = $request->all();
+        $data['image'] = Storage::put('uploads',$data['image']);
         $data['slug'] = Str::slug($data['title'], '-');
         $project = Project::create($data);
 
