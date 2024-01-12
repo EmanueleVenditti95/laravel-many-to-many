@@ -38,7 +38,7 @@ class ProjectController extends Controller
     {
         $request->validate([
             'title' => ['required', 'max:255', 'string',Rule::unique('projects')],
-            'image' => ['required', 'url'],
+            'image' => ['nullable', 'url'],
             'description' => ['nullable'],
             'type_id' => ['nullable','exists:types,id'],
             'technology_id' => ['nullable','exists:types,id'],
