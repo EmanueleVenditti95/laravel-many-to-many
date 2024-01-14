@@ -46,8 +46,13 @@ class ProjectController extends Controller
         ]);
         
         $data = $request->all();
-        $data['image'] = Storage::put('uploads',$data['image']);
         $data['slug'] = Str::slug($data['title'], '-');
+        
+        if($request->hasFile('image')) {
+            $path = Storage::put('uploads',$request->image);
+            $data['image'] = $path;            
+        }
+
         $project = Project::create($data);
 
         if ($request->has('technologies')){
@@ -80,16 +85,26 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+
         //ricordarsi di definire $fillable nel Model
         $request->validate([
             'title' => ['required', 'max:255', 'string',Rule::unique('projects')->ignore($project->id)],
-            'image' => ['required', 'url'],
+            'image' => ['nullable', 'file','max:2048'],
             'description' => ['nullable'],
             'type_id' => ['nullable','exists:types,id'],
             'technology_id' => ['nullable','exists:types,id'],
         ]);
 
         $data = $request->all(); 
+
+        //if($request->hasFile('image')) {
+            $path = Storage::put('uploads',$request->image);
+            $data['image'] = $path;
+
+           // if ($project->image) {
+                Storage::delete($project->image);
+            //}            
+        //} 
 
         $data['slug'] = Str::slug($data['title'], '-');
 

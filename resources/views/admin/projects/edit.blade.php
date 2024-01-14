@@ -30,9 +30,9 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label for="image">Immagine</label>
-                <input type="url" class="form-control" name="image" id="image" placeholder="URL immagine" value="{{$project->image}}" required>
+            <div class="mb-3">
+                <label for="image" class="form-label">Immagine</label>
+                <input class="form-control" type="file" id="image" name="image">
             </div>
             <div class="form-group">
                 <label for="description">Descrizione</label>
