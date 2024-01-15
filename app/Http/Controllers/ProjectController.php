@@ -97,14 +97,14 @@ class ProjectController extends Controller
 
         $data = $request->all(); 
 
-        //if($request->hasFile('image')) {
+        if($request->hasFile('image')) {
             $path = Storage::put('uploads',$request->image);
             $data['image'] = $path;
 
-           // if ($project->image) {
+            if ($project->image) {
                 Storage::delete($project->image);
-            //}            
-        //} 
+            }            
+        } 
 
         $data['slug'] = Str::slug($data['title'], '-');
 
